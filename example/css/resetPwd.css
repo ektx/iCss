@@ -1,0 +1,107 @@
+@charset "utf-8";
+
+.os-body {
+	background-color: #efeff2;
+}
+
+.reset-passwd-mod {
+	width: 605px;
+	height: 334px;
+	padding: 22px;
+	background-color: #fff;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin: -167px -303px;
+	box-sizing: border-box;
+}
+
+.reset-meg-box {
+	width: 525px;
+	margin: 0 auto;
+	line-height: 62px;
+	color: #666;
+	font-size: 20px;
+	background-color: #fffaeb;
+	border: 1px solid #fff3cf;
+}
+.reset-meg-box img {
+	padding: 14px 14px 14px 19px;
+	vertical-align: middle;
+}
+
+.errorInput {
+	border-color: #f68177;
+}
+
+label.error {
+	color: #e60012;
+	font-size: 12px;
+}
+
+.web-icos {
+	font-size: 16px;
+	margin: 0 5px;
+}
+
+.reset-passwd-mod form {
+	padding: 20px 0;
+}
+.reset-passwd-mod p {
+	height: 50px;
+}
+.reset-passwd-mod .title {
+	display: inline-block;
+	width: 100px;
+	font-size: 16px;
+	color: #666;
+	text-align: right;
+}
+.reset-passwd-mod input {
+	width: 184px;
+	height: 32px;
+}
+
+/* 密码安全强度提醒 */
+.password-safe-remind {
+	height: 21px;
+	font-size: 0;
+	width: 184px;
+	margin: 0 0 0 103px;
+}
+.password-safe-remind li {
+	display: inline-block;
+	width: 33.33%;
+}
+.password-safe-remind span {
+	display: block;
+	height: 5px;
+	background-color: #c7c7c7;
+}
+
+.btn.blue {
+	display: block;
+	margin: 0 0 0 103px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

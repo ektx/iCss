@@ -1,0 +1,26 @@
+
+@charset "utf-8";
+
+/* 一级 */
+@import url('parts/one.css');
+/* 二级 */
+@import url('parts/two/two.css');
+
+body {
+	background: #f5f5f5;
+}
+
+h1 {
+	color: yellow
+}
+
+.body {
+	width: 400px;
+	height: 200px;
+	background: #09f;
+}
+
+#menu {
+
+}
+

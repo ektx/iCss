@@ -1,0 +1,11 @@
+{
+  "name": "i-css",
+  "version": "0.2.0",
+  "description": "合并import样式功能",
+  "main": "index.js",
+  "author": "ektx",
+  "license": "MIT",
+  "dependencies": {
+    "dirfiles": "^0.0.1"
+  }
+}

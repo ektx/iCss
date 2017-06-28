@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+/*
+	面包屑样式
+*/
+.bread-crumbs-mod {
+	font-size: 0;
+	border-left: 2px solid #03adf5;
+	padding-left: 5px;
+	height: 12px;
+	line-height: 12px;
+}
+.bread-crumbs-mod li {
+	display: inline-block;
+	font-size: 12px;
+	color: #666;
+}
+.bread-crumbs-mod li:last-child {
+	color: #666;
+	font-weight: bold;
+}
+.bread-crumbs-mod li:not(:first-child)::before {
+	display: inline-block;
+	content: '';
+	font-family: sans-serif;
+	border: 1px solid #666;
+	border-top: none;
+	border-left: none;
+	width: 5px;
+	height: 5px;
+	transform: rotateZ(-45deg) translateX(2px);
+	margin: 0px 5px 0 0;
+}

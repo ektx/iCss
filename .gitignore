@@ -1,0 +1,9 @@
+# 通用忽略内容
+*node_modules
+*.DS_Store
+*yarn.lock
+package-lock.json
+
+# 此项目使用
+example/dist
+

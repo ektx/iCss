@@ -1,0 +1,456 @@
+@charset 'utf-8';
+
+.web-icos {
+	display: inline-block;
+	width: 1em;
+	height: 1em;
+	vertical-align: middle;
+	background-image: url('../../img/os/icos.png');
+}
+.web-9x { font-size: 9px }
+.web-18x { font-size: 18px }
+.web-22x { font-size: 22px }
+
+.block2-grey-ico { background-position: -22px -335px }
+.cloudFind { background-position: -98px -16px }
+.min-nav { background-position: -27px -17px }
+.mac-grey-ico { background-position: -22px -424px }
+.findPage-grey-ico { background-position: -22px -363px }
+.house-grey-ico { background-position: -22px -36px }
+.integrity-grey-ico { background-position: -22px -485px }
+.set-grey-ico { background-position: -21px -96px }
+.setCloud-grey-ico { background-position: -21px -125px }
+.stream-grey-ico { background-position: -22px -304px }
+.search-ico { background-position: -212px -20px }
+.remind-ico { background-position: -171px -16px }
+.ppt-grey-ico { background-position: -22px -155px }
+.TV-grey-ico { background-position: -22px -245px }
+.layer-grey-ico { background-position: -22px -273px }
+.line-grey-ico { background-position: -22px -392px }
+.watch-grey-ico { background-position: -22px -184px }
+.warn-ico { background-position: -114px -69px }
+
+.web-icos.ok { background-position: -126px -19px }
+.web-icos.ok2 { background-position: -142px -68px }
+.web-icos.err { background-position: -126px -39px }
+.web-icos.err2 { background-position: -173px -69px }
+.web-icos.info { background-position: -148px -39px }
+.web-icos.wait { background-position: -148px -19px }
+.web-icos.add { background-position: -94px -732px }
+.web-icos.del { background-position: -94px -700px }
+
+.house-white-ico { background-position: -58px -36px }
+.set-white-ico { background-position: -57px -96px }
+.setCloud-white-ico { background-position: -57px -125px }
+.ppt-white-ico { background-position: -58px -155px }
+.watch-white-ico { background-position: -58px -184px }
+.TV-white-ico { background-position: -58px -245px }
+.layer-white-ico { background-position: -58px -273px }
+.stream-white-ico { background-position: -58px -304px }
+.block2-white-ico { background-position: -58px -335px }
+.findPage-white-ico { background-position: -58px -363px }
+.line-white-ico { background-position: -58px -392px }
+.mac-white-ico { background-position: -58px -424px }
+.integrity-white-ico { background-position: -58px -485px }
+
+.user-grey-ico { background-position: -22px -511px; }
+.user-white-ico { background-position: -58px -511px; }
+.order-grey-ico { background-position: -22px -535px; }
+.order-white-ico { background-position: -58px -535px; }
+.data-grey-ico { background-position: -22px -563px; }
+.data-white-ico { background-position: -58px -563px; }
+.v-grey-ico { background-position: -22px -593px; }
+.v-white-ico { background-position: -58px -593px; }
+.document-grey-ico { background-position: -22px -614px; }
+.document-white-ico { background-position: -58px -614px; }
+.dictionary-grey-ico { background-position: -22px -643px; }
+.dictionary-white-ico { background-position: -58px -643px; }
+.data-system-task-grey-ico { background-position: -22px -674px; }
+.data-system-task-white-ico { background-position: -58px -674px; }
+.data-log-grey-ico { background-position: -22px -706px; }
+.data-log-white-ico { background-position: -58px -706px; }
+.topic-grey-ico { background-position: -22px -452px; }
+.topic-white-ico { background-position: -58px -452px; }
+.data-order-grey-ico { background-position: -22px -735px; }
+.data-order-white-ico { background-position: -58px -735px; }
+.refresh-ico { background-position: -141px -194px }
+.homeSetting-grey-ico { background-position: -94px -247px }
+.homeSetting-white-ico { background-position: -123px -247px }
+.organization-grey-ico { background-position: -94px -273px }
+.organization-white-ico { background-position: -123px -273px }
+.user-blue-ico { background-position: -276px -17px }
+
+
+.txt-center { text-align: center; }
+
+.more-icos {
+	font-size: 0;
+	text-align: center;
+}
+.more-icos li {
+	display: inline-block;
+	font-size: 12px;
+	width: .33em;
+	height: .33em;
+	margin: 0 .08em;
+	border-radius: 100%;
+	background-color: #666;
+}
+
+.editIco-icos {
+	display: inline-block;
+	width: 18px;
+	height: 18px;
+	border: none;
+	outline: none;
+	cursor: pointer;
+	background: url('../../img/os/edits.png') no-repeat;
+}
+
+.editIco-add-ico { background-position: 0 0 }
+.editIco-add-ico:hover { background-position: 0 -20px }
+.editIco-add-ico:active { background-position: 0 -40px }
+
+.editIco-edit-ico { background-position: -26px 0 }
+.editIco-edit-ico:hover { background-position: -26px -20px }
+.editIco-edit-ico:active { background-position: -26px -40px }
+
+.editIco-del-ico { background-position: -52px 0 }
+.editIco-del-ico:hover { background-position: -52px -20px }
+.editIco-del-ico:active { background-position: -52px -40px }
+/* 表格模块 */
+/* 表格主体 */
+.dos-table-mod,
+.dos-table-header,
+.dos-table-contents,
+.dos-table-mod table {
+	width: 100%;
+	font-size: 14px;
+}
+.dos-table-mod {
+	border: 1px solid #e1e6eb;
+	box-sizing: border-box;
+}
+.dos-table-mod table {
+	border-collapse: collapse;
+}
+.dos-table-mod th,
+.dos-table-mod td {
+	padding: 5px;
+}
+.dos-table-mod td:first-child {
+	border-left-color: transparent;
+}
+.dos-table-header {
+	overflow: hidden;
+	border-bottom: none;
+}
+.dos-table-contents {
+	overflow: auto;
+}
+/* 
+	主题1 - 灰色效果
+	-------------------------------
+	效果请查看页面，
+	实现的是 2 行合并，且隔行换色的功能
+
+*/
+.theam01-table td {
+	border: 1px solid #e1e6eb;
+}
+
+/* 2行合并且隔行换色 */
+.dos-table-header th,
+.theam01-table tr:nth-child(4n+4),
+.theam01-table tr:nth-child(4n+3) {
+	background-color: #f5f6fa;
+}
+
+.theam01-table .tr-err td,
+.theam01-table .tr-err th {
+	background-color: #ffe9ea;
+}
+
+/* 弹层表格 */
+.table-box {
+	height: 420px;
+}
+.table-box table {
+	width: 100%;
+}
+.table-header table th {
+	color: #fff;
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 28px;
+	background-color: #03adf5;
+}
+.table-body {
+	height: 100%;
+	padding-top: 28px;
+	margin-top: -28px;
+	box-sizing: border-box;
+}
+.table-inner {
+	height: 100%;
+	overflow: auto;
+	border-top: none;
+	border: 1px solid #eaedf1;
+}
+.table-inner td {
+	font-size: 12px;
+	color: #333;
+	text-align: center;
+	line-height: 28px;
+}
+
+.table-box.col1 td,
+.table-box.col1 th {
+	width: 100%;
+}
+.table-box.col2 td,
+.table-box.col2 th {
+	width: 50%;
+}
+.table-box.col3 td,
+.table-box.col3 th {
+	width: 33.3%;
+}
+.table-box.col4 td,
+.table-box.col4 th {
+	width: 25%;
+}
+
+/* 
+	btn 
+*/
+.btn, .tbtn {
+	font-size: 12px;
+	cursor: pointer;
+	outline: none;
+}
+.btn {
+	line-height: 2.2em;
+	color: #666;
+	padding: 0 .83em;
+	border: none;
+}
+.btn:hover {
+	background-image: -ms-linear-gradient(rgba(255, 255, 255, .2), rgba(255, 255, 255, .2));
+	background-image: linear-gradient(rgba(255, 255, 255, .2), rgba(255, 255, 255, .2))
+}
+.btn:active {
+	background-image: -ms-linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .2));
+	background-image: linear-gradient(rgba(0, 0, 0, .2), rgba(0, 0, 0, .2))
+}
+
+
+.tbtn {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background-color: transparent;
+}
+.tbtn:active {
+	text-decoration: underline;
+}
+
+.btn.blue {
+	color: #fff;
+	background-color: #03adf5;
+}
+.tbtn.blue {
+	color: #03adf5;
+}
+
+.btn2 {
+	font-size: 12px;
+	color: #333;
+	background: #f7f7f7;
+	border: 1px solid #ddd;
+	outline: none;
+	cursor: pointer;
+	padding: .42em 1em;
+}
+.btn2:hover {
+	border-color: #aaa;
+}
+/*
+	搜索功能
+*/
+.search-int-mod {
+	position: relative;
+	font-size: 14px;
+}
+.search-int-mod button,
+.search-int-mod input {
+	outline: none;
+	background-color: transparent;
+}
+.search-int-mod input {
+	display: block;
+	padding: .35em 2.3em .35em .35em;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	box-sizing: border-box;
+}
+.search-int-mod button {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 2em;
+	height: 100%;
+	border: none;
+	text-indent: 999px;
+	cursor: pointer;
+}
+.search-int-mod button:hover {
+	opacity: .7;
+}
+.search-int-mod button:active {
+	background-color: rgba(0, 0, 0, .1);
+}
+.search-int-mod button i {
+	display: block;
+	font-size: 14px;
+	margin: 0 auto;
+}
+
+input {
+	outline: none;
+	padding: 3px 5px;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+}
+input[type="checkbox"],
+input[type="radio"] {
+	border: none;
+}
+input[readonly],
+input[disabled] {
+	background: #f5f5f5;
+}
+textarea {
+	margin: 0;
+	padding: 5px;
+	border: 1px solid #ccc;
+	outline: none;
+	box-sizing: border-box;
+}
+
+input:focus:not([readonly]),
+textarea:focus {
+	border-color: #03adf5;
+	box-shadow: inset 2px 2px 5px rgba(0, 0, 0, .1)
+}
+input[type="checkbox"]:focus,
+input[type="radio"]:focus {
+	box-shadow: none;
+}
+input[readonly]:focus,
+input[disabled]:focus {
+	border-color: #ccc;
+	box-shadow: none;
+}
+
+input.err {
+	border-color: #f68177;
+}
+
+select {
+	outline: none;
+	color: #333;
+	border: 1px solid #ccc;
+	border-radius: 0;
+}
+
+/* tab切换 */
+.tab-nav {
+	font-size: 0;
+	border-bottom: 1px solid #ddd;
+	border-left: 1px solid #ddd;
+}
+.tab-nav li {
+	display: inline-block;
+	border: 1px solid #ddd;
+	border-bottom-color: transparent;
+	margin-left: -1px;
+	position: relative;
+}
+.tab-nav li:after,
+.tab-nav li:before {
+	display: block;
+	content: '';
+	position: absolute;
+	width: 100%;
+	left: 0;
+}
+.tab-nav li.current {
+	border-bottom-color: #fff;
+}
+.tab-nav li.current:before {
+	top: -1px;
+	height: 2px;
+	background-color: #03adf5;
+}
+.tab-nav li.current:after {
+	bottom: -2px;
+	height: 2px;
+	background-color: #fff;
+}
+.tab-nav li a {
+	display: block;
+	padding: 10px 30px;
+	font-size: 12px;
+	color: #666;
+}
+.tab-nav li a:hover {
+	color: #03adf5;
+}
+
+.point-tab-nav {
+	border-left: none;
+}
+.point-tab-nav li {
+	margin: 0 3px;
+}
+.point-tab-nav li.current {
+	border-color: #03adf5;
+}
+.point-tab-nav li:before {
+	display: none;
+}
+.point-tab-nav li.new:before {
+	display: block;
+	width: 7px;
+    height: 7px;
+    border-radius: 100%;
+    top: 5px;
+    right: 5px;
+    left: auto;
+    background-color: #de541e;
+}
+.point-tab-nav li a {
+	padding: 5px 15px;
+}
+.point-tab-nav li.current a {
+	color: #03adf5
+}
+
+
+/* 无权限 */
+.no-permission-mod {
+	width: 165px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -100px -83px;
+	z-index: 10;
+	text-align: center;
+	font-size: 0;
+}
+.no-permission-mod p {
+	font-size: 18px;
+	margin-top: 25px;
+}

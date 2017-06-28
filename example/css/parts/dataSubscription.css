@@ -1,0 +1,184 @@
+@charset 'utf-8';
+
+
+/*
+	数据订阅 
+	--------------------------------------
+	@祝文龙
+	@2016-10-x
+
+	兼容老版订阅中表格样式  
+*/
+
+.add-newTopics-btns {
+	overflow: hidden;
+	margin: 10px 0;
+}
+.btn-mybtns-box {
+	float: right;
+}
+.add-newTopics-table td:first-child,
+.add-newTopics-table td:nth-child(2),
+.add-newTopics-table td:nth-child(3) {
+	text-align: center;
+}
+.add-newTopics-table td:first-child,
+.add-newTopics-table th:first-child,
+.add-newTopics-table th:nth-child(2),
+.add-newTopics-table td:nth-child(2) {
+	width: 15px;
+}
+.add-newTopics-table td:nth-child(3),
+.add-newTopics-table th:nth-child(3) {
+	width: 40px;
+}
+.add-newTopics-table td:nth-child(4),
+.add-newTopics-table th:nth-child(4),
+.add-newTopics-table td:nth-child(5),
+.add-newTopics-table th:nth-child(5) {
+	width: 140px;
+}
+.add-newTopics-table td {
+	color: #333;
+	border: 1px solid #e1e6eb;
+}
+.add-newTopics-table .dos-table-contents {
+	height: 200px;
+	overflow: auto;
+}
+.add-newTopics-table thead th {
+	color: #999;
+	font-weight: normal;
+}
+
+.add-newTopics-table .web-icos {
+	width: 12px;
+}
+
+
+.add-topics-box {
+	padding: 15px;
+}
+.add-topics-title {
+	font-size: 12px;
+	line-height: 1.8em;
+	margin: .41em 0;
+	color: #ff7865;
+}
+.add-topics-title span {
+	color: #333;
+	padding: 0 3px;
+}
+
+.add-topics-aside {
+	float: left;
+	width: 210px;
+	border: 1px solid #ccc;
+}
+.add-topics-aside .search-int-mod input {
+	height: 28px;
+	border-color: transparent;
+}
+.add-topics-asideBox {
+	height: 235px;
+	border-top: 1px solid #ccc;
+}
+
+.add-topics-main {
+	overflow: hidden;
+	padding: 0 0 0 10px;
+}
+.add-topics-main textarea {
+	width: 100%;
+	max-width: 100%;
+	height: 52px;
+	color: #333;
+}
+
+.add-topics-titBox .add-topics-title {
+	width: 80%;
+	float: left;
+}
+.add-topTitBox-btn {
+	width: 20%;
+	float: right;
+	text-align: right;
+	margin-top: 7px;
+}
+.add-topTitBox-btn .tbtn {
+	margin-left: 10px;
+}
+.add-noTopics-display {
+	color: #666;
+	border: 1px solid #ccc;
+	background-color: #eee;
+	padding: 5px;
+}
+
+
+.add-topics2-box {
+	padding: 0 15px 15px;
+}
+.add-topics-form {
+	margin-top: 15px;
+}
+.add-topics-form > ul li {
+	width: 50%;
+	float: left;
+	font-size: 0;
+	margin-bottom: 5px;
+}
+.add-topics-form .title {
+	display: block;
+	float: left;
+	width: 70px;
+	padding-right: 10px;
+	font-size: 12px;
+	color: #333;
+	text-align: right;
+}
+.title b {
+	color: red;
+}
+.add-topics-form .inner {
+	display: block;
+	overflow: hidden;
+}
+.add-topics-form .inner input {
+	width: 100%;
+}
+.add-topics2-txtArea {
+	width: 100%;
+	height: 100px;
+}
+
+.add-topics-errBox {
+	color: #666;
+	padding: 5px;
+	text-align: center;
+	background-color: #fbd6d7;
+	border: 1px solid #fcb4b6;
+}
+.add-topics-form .btn-mybtns-box {
+	margin-top: 10px;
+}
+.add-topics-form .btn-mybtns-box button {
+	margin-left: 10px;
+}
+
+.add-topics-formTitle {
+	font-size: 14px;
+	text-align: center;
+	font-weight: normal;
+	padding: 15px 0;
+}
+.add-topics-order {
+	font-size: 12px;
+	padding: 5px 0;
+}
+.add-topics-order select {
+	float: right;
+	font-size: 12px;
+}
+
+
