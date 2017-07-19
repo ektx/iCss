@@ -1,4 +1,4 @@
-const css = require('../bin/css.v2');
+const css = require('i-css');
 
 // 测试多级功能
 css({

@@ -46,7 +46,7 @@ function getImportCss (data, parentFilePath) {
 }
 
 function css(options, callback) {
-
+console.log(options)
 
 	let readDirAllCss = filePath => {
 
