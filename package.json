@@ -1,5 +1,5 @@
 {
-  "name": "i-css",
+  "name": "im-css",
   "version": "0.2.0",
   "description": "合并import样式功能",
   "main": "index.js",
