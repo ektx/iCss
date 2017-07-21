@@ -1,7 +1,8 @@
 /*
-	iCss
+	imCss
 	-----------------------------------
-	v0.2.0
+	API
+	https://github.com/ektx/imCss
 */
 
 
@@ -14,7 +15,8 @@ const dirFiles = require('dirfiles');
 const SAVE_CSS_SPACE = {};
 
 /*
-
+	@data  样式内容
+	@parentFilePath 父级路径
 */
 function getImportCss (data, parentFilePath) {
 	let newArr = [];
@@ -46,7 +48,6 @@ function getImportCss (data, parentFilePath) {
 }
 
 function css(options, callback) {
-console.log(options)
 
 	let readDirAllCss = filePath => {
 
@@ -208,9 +209,10 @@ console.log(options)
 
 	result.readmeInfo = `@charset 'utf-8';
 /* 
-	iCss v0.2.0
+	imCss
 	(c) 2017 ektx
 	welcome use it!
+	API: https://github.com/ektx/imCss
 */\r\n`
 
 	// 读取当前样式目录下所有文件

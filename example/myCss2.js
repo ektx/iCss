@@ -1,4 +1,4 @@
-const css = require('i-css');
+const css = require('im-css');
 
 // 测试多级功能
 css({
