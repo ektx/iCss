@@ -7,3 +7,5 @@ package-lock.json
 # 此项目使用
 example/dist
 
+
+*.log
