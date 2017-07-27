@@ -1,0 +1,10 @@
+@charset 'utf-8';
+
+/*
+	示例demo
+*/
+
+@import url('parts/a.css');
+@import url('parts/b.css');
+/* c.css 是不存在的css */
+@import url('parts/c.css');
