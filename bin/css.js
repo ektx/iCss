@@ -35,8 +35,11 @@ function getImportCss (data, parentFilePath) {
 				_obj.comment = '无'
 			}
 
-			val = val.match(/@im.+['"$]/gi)[0];
-			_obj.importPath = val.slice(13, val.length - 1);
+			_obj.importPath = val.match(/\((.+)\)/)[1];
+
+			if( /'|"/.test(_obj.importPath) ) {
+				_obj.importPath = _obj.importPath.replace(/'|"/g, '')
+			}
 
 			_obj.resolve = path.resolve(path.dirname(parentFilePath), _obj.importPath);
 
@@ -47,11 +50,7 @@ function getImportCss (data, parentFilePath) {
 	return newArr; 
 }
 
-exports.getImportCss = getImportCss;
-
-
-
-function css(options, callback) {
+function css(entryFile, outFile, callback) {
 
 	let readDirAllCss = filePath => {
 
@@ -152,6 +151,8 @@ function css(options, callback) {
 		let result = [];
 		let thisCss = SAVE_CSS_SPACE[path.resolve(filePath)];
 
+		if (!thisCss) return;
+
 		if (thisCss.import && thisCss.import.length > 0) {
 
 			let imports = thisCss.import;
@@ -160,11 +161,11 @@ function css(options, callback) {
 				if (!imports[i].clearData) {
 
 					let _comment = imports[i].comment;
-					_comment = _comment.slice(2, _comment.length-2);
+					_comment = _comment === '无' ? _comment : _comment.slice(2, _comment.length-2);
 
 					// 添加模板数据
 					result.push( `\r\n\r\n/*==================================== 
-	Start ${_comment}
+	${_comment}
 	${imports[i].importPath}
 >>>>----------------------------->*/\r\n`  );
 					result.push( mergeThisCssFile( imports[i].resolve ) );
@@ -206,7 +207,7 @@ function css(options, callback) {
 		.replace(/\s>\s/g, '>')
 		.replace(/[\r\n]/g, '');
 
-		writeFileInner( options.out.substring(0, options.out.length - 3) + 'min.css', result.readmeInfo + result.min)
+		writeFileInner( outFile.replace('.css', '.min.css'), result.readmeInfo + result.min)
 	}
 
 	let result = {};
@@ -220,19 +221,19 @@ function css(options, callback) {
 */\r\n`
 
 	// 读取当前样式目录下所有文件
-	readDirAllCss(options.file)
+	readDirAllCss(entryFile)
 
-	doThisCssFile( path.resolve(options.file) );
+	doThisCssFile( path.resolve(entryFile) );
 
-	result.data = mergeThisCssFile( options.file );
+	result.data = mergeThisCssFile( entryFile );
 
 	minCss( result.data )
 
-	writeFileInner( options.out, result.readmeInfo + result.data )
+	writeFileInner( outFile, result.readmeInfo + result.data )
 
 	return result
 
 }
 
-exports = css;
+module.exports = css;
 
