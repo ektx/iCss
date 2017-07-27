@@ -8,3 +8,7 @@
 @import url('parts/b.css');
 /* c.css 是不存在的css */
 @import url('parts/c.css');
+
+h1 {
+	background: #909
+}
