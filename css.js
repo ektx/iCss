@@ -47,6 +47,10 @@ function getImportCss (data, parentFilePath) {
 	return newArr; 
 }
 
+exports.getImportCss = getImportCss;
+
+
+
 function css(options, callback) {
 
 	let readDirAllCss = filePath => {
@@ -148,8 +152,6 @@ function css(options, callback) {
 		let result = [];
 		let thisCss = SAVE_CSS_SPACE[path.resolve(filePath)];
 
-		if (!thisCss) return;
-
 		if (thisCss.import && thisCss.import.length > 0) {
 
 			let imports = thisCss.import;
@@ -162,7 +164,7 @@ function css(options, callback) {
 
 					// 添加模板数据
 					result.push( `\r\n\r\n/*==================================== 
-	${_comment}
+	Start ${_comment}
 	${imports[i].importPath}
 >>>>----------------------------->*/\r\n`  );
 					result.push( mergeThisCssFile( imports[i].resolve ) );
@@ -232,5 +234,5 @@ function css(options, callback) {
 
 }
 
-module.exports = css;
+exports = css;
 
