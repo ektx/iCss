@@ -53,8 +53,8 @@ function getImportCss (data, parentFilePath) {
 
 function clearCssData (filePath) {
 
-	let fsStat = fs.statSync( filePath );
 	let cssFilePath = path.resolve( filePath );
+	let fsStat = '';
 
 	let doThisCss = () => {
 		let _css = SAVE_CSS_SPACE[cssFilePath];
@@ -64,9 +64,15 @@ function clearCssData (filePath) {
 
 		_css.get = [];
 
+
 		for (let i = 0,l = _css.import.length; i < l; i++) {
-			if (!(_css.import[i].resolve in _css.get)) {
-				_css.get.push( _css.import[i].resolve )
+
+			let imCssResolve = _css.import[i].resolve;
+
+			clearCssData( imCssResolve )
+
+			if (!(imCssResolve in _css.get)) {
+				_css.get.push( imCssResolve )
 			}
 		}
 
@@ -80,11 +86,17 @@ function clearCssData (filePath) {
 
 	}
 
+	try {
+		fsStat = fs.statSync( filePath );
+	} catch (err) {
+		fsStat = '';
+	}
 
 	if ( cssFilePath in SAVE_CSS_SPACE) {
 		console.log('存在');
 
-		if (SAVE_CSS_SPACE[cssFilePath].stat.mtime < fsStat.mtime) {
+		if (SAVE_CSS_SPACE[cssFilePath].stat && SAVE_CSS_SPACE[cssFilePath].stat.mtime < fsStat.mtime) {
+
 			doThisCss();
 		} else {
 			console.log('不用更新的')
@@ -94,8 +106,12 @@ function clearCssData (filePath) {
 		console.log('不存在');
 
 		SAVE_CSS_SPACE[cssFilePath] = {};
+		// 添加文件状态
+		SAVE_CSS_SPACE[cssFilePath].stat = fsStat;
+		SAVE_CSS_SPACE[cssFilePath].resolve = cssFilePath;
 
-		doThisCss();
+		if (fsStat)
+			doThisCss();
 	}
 
 }
@@ -104,6 +120,8 @@ function clearCssData (filePath) {
 function css(entryFile, outFile, callback) {
 
 	clearCssData( entryFile );
+
+	console.log(Object.keys(SAVE_CSS_SPACE).length)
 
 }
 
