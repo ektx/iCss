@@ -9,10 +9,9 @@
 const fs = require('fs');
 const path = require('path');
 
-// 获取指定目录下所有的文件组件
-const dirFiles = require('dirfiles');
 // 保存样式
 const SAVE_CSS_SPACE = {};
+
 
 /*
 	@data  样式内容
@@ -20,8 +19,8 @@ const SAVE_CSS_SPACE = {};
 */
 function getImportCss (data, parentFilePath) {
 	let newArr = [];
-
-	let arr = data.match(/(\/\*.+[\n\r])?@import.+;/gi )
+	let arr = data.match( /(\/\*.+[\n\r])?@import.+;/gi )
+	let cssDir = path.dirname(parentFilePath)
 
 	if (arr && arr.length > 0) {
 
@@ -29,19 +28,20 @@ function getImportCss (data, parentFilePath) {
 
 			let _obj = {};
 
+			// 注释
 			if ( /[\n\r]/.test(val) ) {
 				_obj.comment = val.match(/\/\*.*\*\//)[0]
-			} else {
-				_obj.comment = '无'
 			}
 
+			// 引入路径
 			_obj.importPath = val.match(/\((.+)\)/)[1];
 
 			if( /'|"/.test(_obj.importPath) ) {
 				_obj.importPath = _obj.importPath.replace(/'|"/g, '')
 			}
 
-			_obj.resolve = path.resolve(path.dirname(parentFilePath), _obj.importPath);
+			// 引入文件的绝对路径
+			_obj.resolve = path.resolve(cssDir, _obj.importPath);
 
 			newArr.push(_obj)
 		}
@@ -50,188 +50,60 @@ function getImportCss (data, parentFilePath) {
 	return newArr; 
 }
 
-function css(entryFile, outFile, callback) {
 
-	let readDirAllCss = filePath => {
+function clearCssData (filePath) {
 
-		if (filePath in SAVE_CSS_SPACE) {
-			console.log('此文件已经读取过!')
-		} else {
-			// 得到父级地址
-			let inputDirName = path.dirname(filePath);
+	let fsStat = fs.statSync( filePath );
+	let cssFilePath = path.resolve( filePath );
 
-			// 读取此文件所在父级目录下所有的文件
-			let getAllCssPath = dirFiles(inputDirName, true);
+	let doThisCss = () => {
+		let _css = SAVE_CSS_SPACE[cssFilePath];
+		_css.origin = fs.readFileSync(filePath, 'utf8');
 
-			// 如果读取文件目录出错
-			if (getAllCssPath.status) {
+		_css.import = getImportCss(_css.origin, cssFilePath);
 
-				SAVE_CSS_SPACE[filePath] = {
-					originData: '',
-					clearData: '/* 读取文件时错误,没有发现此文件所在的父级目录 */',
-					status: 'error',
-					error: getAllCssPath.error
-				}
-				return;
-			};
+		_css.get = [];
 
-			getAllCssPath.forEach( val => {
-
-				// 对文件进行读取
-				if (val.type === 'file' && path.extname(val.name) === '.css') {
-
-					// 此文件未被读取在内存中
-					if (!(val.path in SAVE_CSS_SPACE)) {
-
-						try {
-							let data = fs.readFileSync(val.path, 'utf8');
-							
-							SAVE_CSS_SPACE[path.resolve(val.path)] = {
-								originData: data
-							}
-						} catch (err) {
-
-							console.log('读取以下文件时错误:\n', val.path);
-						}
-
-					} else {
-						console.log(val.path+' 已经存在!')
-					}
-
-				}
-
-			})
-
-		}
-	}
-
-	/*
-		处理css
-		--------------------------------------
-		1.得到 import 所有内容
-		2.得到除去了 import 和 @charset 的内容
-	*/
-	let doThisCssFile = (filePath) => {
-
-		if (!(filePath in SAVE_CSS_SPACE)) {
-			if (!result.error) {
-				result.error = []
-			}
-
-			result.error.push( filePath );
-			readDirAllCss( filePath )
-			return;
-		}
-
-		// 已经处理过
-		if (SAVE_CSS_SPACE[filePath].clearData) return;
-
-		let dataParent = SAVE_CSS_SPACE[filePath];
-		let data = dataParent.originData;
-
-		dataParent.import = getImportCss( data, filePath );
-
-		if (dataParent.import.length > 0) {
-			for(let i = 0, l = dataParent.import.length; i < l; i++) {
-				doThisCssFile( dataParent.import[i].resolve )
+		for (let i = 0,l = _css.import.length; i < l; i++) {
+			if (!(_css.import[i].resolve in _css.get)) {
+				_css.get.push( _css.import[i].resolve )
 			}
 		}
 
-
-		dataParent.clearData = data
+		_css.data = _css.origin
 				.replace( /(\/\*.+[\n\r])?@import.+;/gi, '')
 				.replace( /[\r\n]{2,}/g, '\r\n' )
 				.replace( /@charset\s['"](utf)-?8['"];?/i, '')
 				.replace( /(\.{2}\/)+/g, '../');
 
-	}
-
-
-	let mergeThisCssFile = (filePath) => {
-		let result = [];
-		let thisCss = SAVE_CSS_SPACE[path.resolve(filePath)];
-
-		if (!thisCss) return;
-
-		if (thisCss.import && thisCss.import.length > 0) {
-
-			let imports = thisCss.import;
-
-			for (let i = 0, l = imports.length; i < l; i++) {
-				if (!imports[i].clearData) {
-
-					let _comment = imports[i].comment;
-					_comment = _comment === '无' ? _comment : _comment.slice(2, _comment.length-2);
-
-					// 添加模板数据
-					result.push( `\r\n\r\n/*==================================== 
-	${_comment}
-	${imports[i].importPath}
->>>>----------------------------->*/\r\n`  );
-					result.push( mergeThisCssFile( imports[i].resolve ) );
-					result.push( `\r\n/* <------------- END ${_comment} -------------<<<< */`  );
-				}
-
-			}
-		} 
-
-		// 添加自己的数据
-		result.push( thisCss.clearData );
-
-		return result.join('')
-	}
-
-
-	let writeFileInner = (fpath, data) => {
-		
-		fs.writeFile(fpath, data, 'utf8', err=> {
-			if (err) {
-				console.log('保存文件时出错! '+ err);
-				result.save = false;
-
-				if (callback) callback(result)
-				return;
-			}
-
-			result.save = true;
-			if (callback) callback(result)
-			// console.log('保存成功:' + fpath)
-		})
+		console.log( _css );
 
 	}
 
-	let minCss = data => {
-		result.min = data.replace(/(\t|\s{2,}|\/\*(.|\r\n|\n)*?\*\/|\;(?=(\n|\r\n|\t)*?\})|\s(?=\{)|\s(?=\())/g, '')
-		.replace(/:\s/g, ':')
-		.replace(/,\s/g, ',')
-		.replace(/\s>\s/g, '>')
-		.replace(/[\r\n]/g, '');
 
-		writeFileInner( outFile.replace('.css', '.min.css'), result.readmeInfo + result.min)
+	if ( cssFilePath in SAVE_CSS_SPACE) {
+		console.log('存在');
+
+		if (SAVE_CSS_SPACE[cssFilePath].stat.mtime < fsStat.mtime) {
+			doThisCss();
+		} else {
+			console.log('不用更新的')
+		}
+
+	} else {
+		console.log('不存在');
+
+		SAVE_CSS_SPACE[cssFilePath] = {};
+
+		doThisCss();
 	}
 
-	let result = {};
+}
 
-	result.readmeInfo = `@charset 'utf-8';
-/* 
-	imCss
-	(c) 2017 ektx
-	welcome use it!
-	API: https://github.com/ektx/imCss
-*/\r\n`
 
-	// 读取当前样式目录下所有文件
-	readDirAllCss(entryFile)
+function css(entryFile, outFile, callback) {
 
-	doThisCssFile( path.resolve(entryFile) );
-
-	result.data = mergeThisCssFile( entryFile );
-
-	minCss( result.data )
-
-	writeFileInner( outFile, result.readmeInfo + result.data )
-
-	return result
+	clearCssData( entryFile );
 
 }
 
