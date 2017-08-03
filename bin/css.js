@@ -30,7 +30,7 @@ function getImportCss (data, parentFilePath) {
 
 			// 注释
 			if ( /[\n\r]/.test(val) ) {
-				_obj.comment = val.match(/\/\*.*\*\//)[0]
+				_obj.comment = val.match(/\/\*((.|\n)*?)\*\//)[1]
 			}
 
 			// 引入路径
@@ -55,16 +55,16 @@ function clearCssData (filePath) {
 
 	console.log('处理:', filePath)
 
-	let cssFilePath = path.resolve( filePath );
 	let fsStat = '';
+	let needUpdateFromMod = false;
 
 
-	let doThisCss = () => {
-		let _css = SAVE_CSS_SPACE[cssFilePath];
+	let doThisCss = (filePath) => {
+		let _css = SAVE_CSS_SPACE[filePath];
 		// 源码
 		_css.origin = fs.readFileSync(filePath, 'utf8');
 		// 引用
-		_css.import = getImportCss(_css.origin, cssFilePath);
+		_css.import = getImportCss(_css.origin, filePath);
 		// 间接引用 css
 		_css.mod = [];
 
@@ -82,7 +82,8 @@ function clearCssData (filePath) {
 					mtime: SAVE_CSS_SPACE[imCssResolve].stat.mtime
 				})
 
-				_css.mod = _css.mod.concat( SAVE_CSS_SPACE[imCssResolve].mod )
+				if (SAVE_CSS_SPACE[imCssResolve].mod)
+					_css.mod = _css.mod.concat( SAVE_CSS_SPACE[imCssResolve].mod )
 			}
 		}
 
@@ -96,7 +97,7 @@ function clearCssData (filePath) {
 	}
 
 
-	// 读取状态
+	// 读取自己的状态
 	try {
 		fsStat = fs.statSync( filePath );
 	} catch (err) {
@@ -104,66 +105,163 @@ function clearCssData (filePath) {
 	}
 
 	// 内存存储
-	if ( cssFilePath in SAVE_CSS_SPACE) {
+	if ( filePath in SAVE_CSS_SPACE) {
 		console.log('存在');
 
-		if (SAVE_CSS_SPACE[cssFilePath].stat && SAVE_CSS_SPACE[cssFilePath].stat.mtime < fsStat.mtime) {
+		// 1. 更新自己的模板
+		// 查看 mod 是否有变化
+		for (let val of SAVE_CSS_SPACE[filePath].mod) {
+			console.log('*', val )
 
-			doThisCss();
-		} else {
-			console.log(cssFilePath, '自己不用更新的,检查他的模板调用');
+			let valInRAM = SAVE_CSS_SPACE[val.path];
 
-			console.log(SAVE_CSS_SPACE[cssFilePath].mod);
+			// 不存在时间,就是不存在此文件
+			if (!val.mtime) continue;
 
-			for ( let val of SAVE_CSS_SPACE[cssFilePath].mod) {
+
+			if (val.mtime < valInRAM.stat.mtime) {
+				// 更新 因为自己引用的文件没有内存中的新
+				console.log('U')
+				needUpdateFromMod = true;
+			} 
+			// 相同时
+			// 读取实体文件,再比较一次
+			else {
 
 				let modStat;
 
 				try {
-					modStat = fs.statSync( val );
+					modStat = fs.statSync( val.path );
 				} catch (err) {
 					console.log(err);
-					return;
 				}
 
 				// 更新 当前文件比内存的新
-				if (modStat.mtime > SAVE_CSS_SPACE[val].stat.mtime) {
+				if (modStat.mtime > valInRAM.stat.mtime) {
 
+					// 更新 因为文件夹中的文件比内存中的新
+					needUpdateFromMod = true;
 
+					// 更新内存文件 方便后面调用了此模板的文件不用去读文件
+					valInRAM.stat = modStat;
 
-					// 结束遍历,更新文件
-					return;
+					doThisCss( val.path )
+
 				} 
-				// 相同 不用更新
-				else {
 
-				}
-				console.log('*', val )
+			}
 
+		}
+
+		if (SAVE_CSS_SPACE[filePath].stat && SAVE_CSS_SPACE[filePath].stat.mtime < fsStat.mtime) {
+
+			doThisCss( filePath );
+		} else {
+			console.log(filePath, '自己不用更新的,检查他的模板调用');
+
+
+			if (needUpdateFromMod) {
+				console.log('这个文件要更新')
+
+
+			} else {
+				console.log('这个文件不要更新')
 			}
 		}
 
 	} else {
-		console.log('不存在');
+		console.log('不存在,追加内存');
 
-		SAVE_CSS_SPACE[cssFilePath] = {};
+		SAVE_CSS_SPACE[filePath] = {};
 		// 添加文件状态
-		SAVE_CSS_SPACE[cssFilePath].stat = fsStat;
-		SAVE_CSS_SPACE[cssFilePath].resolve = cssFilePath;
+		SAVE_CSS_SPACE[filePath].stat = fsStat;
+		SAVE_CSS_SPACE[filePath].resolve = filePath;
 
 		if (fsStat)
-			doThisCss();
+			doThisCss( filePath );
 	}
 
 }
 
 
-function css(entryFile, outFile, callback) {
+function mergeThisCssFile( entryFile ) {
+	let result = [];
+	let CssInRAM = SAVE_CSS_SPACE[entryFile];
+	let fileName = path.basename(entryFile);
 
-	clearCssData( entryFile );
+	result.push(`\n\n/*=========== START ${fileName} ===========*/\n`)
 
-	// console.log(SAVE_CSS_SPACE)
-	console.log(Object.keys(SAVE_CSS_SPACE).length)
+	if (CssInRAM.import && CssInRAM.import.length > 0) {
+
+		for (let val of CssInRAM.import) {
+
+			let valPath = val.resolve;
+			let valInner = SAVE_CSS_SPACE[valPath];
+
+			result.push(`/*----------- START ${fileName} IMPORT ------------\n`)
+			if (val.comment) {
+				result.push( '\n'+ val.comment +'\n')
+			}
+
+			result.push(`${fileName} > ${path.basename(valPath)}(${val.importPath})\n-----------------------*/\n`)
+
+
+			result.push( mergeThisCssFile( valPath ) );
+
+		}
+	}
+
+	result.push(`/*----------- START ${fileName} INNER ------------*/\n`)
+	result.push( CssInRAM.data )
+	result.push(`\n/*=========== END ${fileName} ============*/\n\n`)
+
+	return result.join('')
+
+}
+
+/*
+	@callback 返回一个保存成功与否的状态,成功 true,失败是 false
+*/
+function writeFileInner (savePath, saveData, callback) {
+
+	fs.writeFile(savePath, saveData, 'utf8', err => {
+		if (err) {
+			console.log('保存文件时出错!\n'+ err);
+
+			if (callback) callback(false)
+			return;
+		}
+
+		if (callback) callback(true)
+	})	
+}
+
+
+function minCss (savePath, data, minCallback) {
+	
+	let result = data.replace(/(\t|\s{2,}|\/\*(.|\r\n|\n)*?\*\/|\;(?=(\n|\r\n|\t)*?\})|\s(?=\{)|\s(?=\())/g, '')
+	.replace(/:\s/g, ':')
+	.replace(/,\s/g, ',')
+	.replace(/\s>\s/g, '>')
+	.replace(/[\r\n]/g, '');
+
+	writeFileInner( savePath.replace('.css', '.min.css'), result, minCallback)
+
+}
+
+
+function css(entryFile, outFile, callback, nodeMin = false, minCallback) {
+
+	let cssFilePath = path.resolve( entryFile );
+
+	clearCssData( cssFilePath );
+
+	let mergeData = mergeThisCssFile( cssFilePath );
+
+	writeFileInner(outFile, mergeData, callback)
+
+	if (nodeMin)
+		minCss(outFile, mergeData, minCallback)
 
 }
 
