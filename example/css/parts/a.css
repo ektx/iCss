@@ -1,9 +1,12 @@
 @charset 'utf-8';
 
+@import url(two/two.css);
+
 /*
 	测试代码
 	---------------------------
 */
+
 a {
 	background: yellow;
 }
@@ -11,3 +14,5 @@ a {
 h1 {
 	background: red
 }
+
+

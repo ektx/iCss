@@ -1,6 +1,6 @@
 {
   "name": "im-css",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "homepage": "https://github.com/ektx/imCss",
   "description": "合并import样式功能",
   "main": "index.js",
