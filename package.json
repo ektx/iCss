@@ -1,12 +1,9 @@
 {
   "name": "im-css",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "homepage": "https://github.com/ektx/imCss",
   "description": "合并import样式功能",
   "main": "index.js",
   "author": "ektx",
-  "license": "MIT",
-  "dependencies": {
-    "dirfiles": "^0.0.1"
-  }
+  "license": "MIT"
 }
