@@ -263,13 +263,24 @@ function writeFileInner (savePath, saveData, callback) {
 */
 function minCss (savePath, data, minCallback) {
 	
+	let mergeHead = `@charset 'utf-8';
+/* 
+	im-css
+	------------------------------------
+	(c) 2017 ektx
+	Welcome Use It!
+	
+	API: 
+	https://github.com/ektx/imCss
+*/\r\n`;
+
 	let result = data.replace(/(\t|\s{2,}|\/\*(.|\r\n|\n)*?\*\/|\;(?=(\n|\r\n|\t)*?\})|\s(?=\{)|\s(?=\())/g, '')
 	.replace(/:\s/g, ':')
 	.replace(/,\s/g, ',')
 	.replace(/\s>\s/g, '>')
 	.replace(/[\r\n]/g, '');
 
-	writeFileInner( savePath.replace('.css', '.min.css'), result, minCallback)
+	writeFileInner( savePath.replace('.css', '.min.css'), mergeHead +result, minCallback)
 
 }
 
@@ -311,7 +322,7 @@ function css({entryFile, outFile,  min = false, callback}) {
 			}
 		})
 
-		if (min)
+		if (min) {
 			minCss(outFile, mergeData, status => {
 				if (callback && callback.min) {
 					callback.min({
@@ -320,8 +331,8 @@ function css({entryFile, outFile,  min = false, callback}) {
 					})
 				}
 			})
+		}
 
-		SAVE_CSS_SPACE[cssFilePath].save = false;
 	}
 
 	// 判断源文件与输出文件的关系
